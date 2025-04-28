@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:sdctechmedia/pref_utils.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:sdctechmedia/dashboard.dart';
@@ -28,12 +29,8 @@ class _SplashPageState extends State<SplashPage> {
   @override
   void initState() {
     // TODO: implement initState
+       Timer(const Duration(seconds: 5), handleTimeout);
 
-    //Timer(const Duration(seconds: 5), handleTimeout);
-
-    Future.delayed(const Duration(seconds: 6), () {
-      print('One second has passed.'); // Prints after 1 second.
-    });
 
     super.initState();
   }
@@ -46,7 +43,7 @@ class _SplashPageState extends State<SplashPage> {
 
     var userid= await prefs.getString('userid');
     print('identify$userid');
-    if(userid!="" || userid=="null" && userid==null){
+    if(PrefUtils().getuserid()!=""){
       Navigator.of(context).push(
         MaterialPageRoute(builder: (context) => dashboard()),
       );
@@ -84,7 +81,8 @@ class _SplashPageState extends State<SplashPage> {
       body: Center(
         // Center is a layout widget. It takes a single child and positions it
         // in the middle of the parent.
-        child: Text("Kannan",style: TextStyle(color:Colors.red),),
+        child: const CircularProgressIndicator(
+          color: Color(0xffBD1A8D),)
       ),
       // This trailing comma makes auto-formatting nicer for build methods.
     );

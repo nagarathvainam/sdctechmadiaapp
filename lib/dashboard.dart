@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:sdctechmedia/pref_utils.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sdctechmedia/newlogin.dart';
 
@@ -15,13 +16,10 @@ class dashboard extends StatefulWidget {
 }
 
 class dashboardState extends State{
-  String userid='';
-  String name='';
+
   @override
   void initState() {
-    // TODO: implement initState
-    super.initState();
-    getuserid();
+
   }
   void _showLogoutDialog(BuildContext context) {
     showDialog(
@@ -36,6 +34,7 @@ class dashboardState extends State{
           ),
           TextButton(
             onPressed: () {
+              PrefUtils().setuserid("");
               Navigator.of(context).pop(); // Close dialog
 
               ScaffoldMessenger.of(context).showSnackBar(
@@ -64,17 +63,7 @@ class dashboardState extends State{
       ),
     );
   }
-  getuserid() async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    userid= (await prefs.getString('userid'))!;
-    name= (await prefs.getString('name'))!;
-     setState(()  {
 
-     print('dashboard$userid');
-      print('guna$name');
-            });
-
-       }
   final List<Map<String, dynamic>> stats = [
     {"title": "Active States", "value": "30", "color": Colors.blue},
     {"title": "Active Cities", "value": "22", "color": Colors.lightBlue},
@@ -135,7 +124,7 @@ class dashboardState extends State{
           },
         ),
         ),
-        title: Text("Name:"+name),
+        title: Text("Name:"+PrefUtils().getname()),
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 20),

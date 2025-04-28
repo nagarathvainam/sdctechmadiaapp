@@ -2,8 +2,9 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+//import 'package:shared_preferences/shared_preferences.dart';
 import 'package:dio/dio.dart';
+import 'package:sdctechmedia/pref_utils.dart';
 
 class Api{
  var responseMessage;
@@ -12,7 +13,7 @@ class Api{
  var name;
 
   login(username, password) async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
+   // final SharedPreferences prefs = await SharedPreferences.getInstance();
     var headers = {
 
       'Cookie': 'PHPSESSID=ohsccuokdm98cjfsqn054u8oi0',
@@ -35,8 +36,10 @@ class Api{
       responseCode = result['responseCode'];
       userid = result['data']['id'];
       name = result['data']['name'];
-      await prefs.setString('userid', userid);
-      await prefs.setString('name', name);
+     // await prefs.setString('userid', userid);
+      PrefUtils().setuserid(userid);
+      PrefUtils().setname(name);
+      //await prefs.setString('name', name);
       print(responseMessage);
       print(responseCode);
       //String snackBar = SnackBar(content: Text("$responseMessage"));

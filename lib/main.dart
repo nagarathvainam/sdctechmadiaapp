@@ -29,11 +29,7 @@ class MyApp extends StatelessWidget {
     return SafeArea(
     child: MaterialApp(
        debugShowCheckedModeBanner: false,
-       initialRoute: '/login',
-        routes: {
-          '/login': (context) => newlogin(),
-          '/dashboard': (context) => dashboard(),
-        },
+
         theme: ThemeData(
           // This is the theme of your application.
           //

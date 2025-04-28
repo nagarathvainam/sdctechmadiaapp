@@ -25,13 +25,24 @@ class PrefUtils {
     _sharedPreferences!.clear();
   }
 
-  Future<void> setThemeData(String value) {
-    return _sharedPreferences!.setString('themeData', value);
+  Future<void> setuserid(String value) {
+    return _sharedPreferences!.setString('userid', value);
   }
 
-  String getThemeData() {
+  String getuserid() {
     try {
-      return _sharedPreferences!.getString('themeData')!;
+      return _sharedPreferences!.getString('userid')!;
+    } catch (e) {
+      return 'primary';
+    }
+  }
+  Future<void> setname(String value) {
+    return _sharedPreferences!.setString('name', value);
+  }
+
+  String getname() {
+    try {
+      return _sharedPreferences!.getString('name')!;
     } catch (e) {
       return 'primary';
     }

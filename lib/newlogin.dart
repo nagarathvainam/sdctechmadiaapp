@@ -14,6 +14,7 @@ class newlogin extends StatefulWidget {
 
 class newloginState extends State<newlogin> {
   bool rememberMe = false;
+  bool loading = false;
   Api db=new Api();
   final usernameController = TextEditingController();
   final passwordController = TextEditingController();
@@ -97,15 +98,24 @@ controller: usernameController,
                   ElevatedButton(
                     onPressed: () {
                       // Sign-in logic
+                      setState(() {
+                        loading==true;
+                      });
 
                       db.login(usernameController.text, passwordController.text).whenComplete(() async {
                         var responseMessage=db.responseMessage;
                         if(db.responseCode=="200"){
+                          setState(() {
+                            loading==false;
+                          });
                           Navigator.push(
                             context,
                             MaterialPageRoute(builder: (context) =>  dashboard()),
                           );
                         }else{
+                          setState(() {
+                            loading==false;
+                          });
                           ScaffoldMessenger.of(
                                  context,
                                ).showSnackBar(SnackBar(content: Text("$responseMessage")));
@@ -123,15 +133,15 @@ controller: usernameController,
                       ),
                       elevation: 5,
                     ),
-                    child: Text(
-                      'SIGN IN',
+                    child:(loading==false)? Text(
+                      'LOGIN',
                       style: TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
 
                         letterSpacing: 1,
                       ),
-                    ),
+                    ):CircularProgressIndicator(),
                   ),
                 ],
               ),

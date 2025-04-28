@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:untitled/login.dart';
-import 'package:untitled/newuser.dart';
+import 'package:sdctechmedia/login.dart';
+import 'package:sdctechmedia/newuser.dart';
 
 /// Flutter code sample for [TabBar].
 

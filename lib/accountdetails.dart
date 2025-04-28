@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:untitled/newuser.dart';
+import 'package:sdctechmedia/newuser.dart';
 
 class Accountdetails extends StatefulWidget {
   const Accountdetails({super.key, required this.title});

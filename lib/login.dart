@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:untitled/newuser.dart';
+import 'package:sdctechmedia/newuser.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key, required this.title});

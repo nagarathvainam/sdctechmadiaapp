@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:untitled/adddistributor.dart';
-import 'package:untitled/bottomsheet.dart';
-import 'package:untitled/dashboard.dart';
-import 'package:untitled/enteramount.dart';
-import 'package:untitled/forgetpassword.dart';
-import 'package:untitled/newlogin.dart';
-import 'package:untitled/newuser.dart';
-import 'package:untitled/login.dart';
-import 'package:untitled/ratecard.dart';
-import 'package:untitled/splash.dart';
-import 'package:untitled/successdetails.dart';
-import 'package:untitled/withdrawalfailed.dart';
-import 'package:untitled/withdrawalpending.dart';
-import 'package:untitled/withdrawalsuccess.dart';
+import 'package:sdctechmedia/adddistributor.dart';
+import 'package:sdctechmedia/bottomsheet.dart';
+import 'package:sdctechmedia/dashboard.dart';
+import 'package:sdctechmedia/enteramount.dart';
+import 'package:sdctechmedia/forgetpassword.dart';
+import 'package:sdctechmedia/newlogin.dart';
+import 'package:sdctechmedia/newuser.dart';
+import 'package:sdctechmedia/login.dart';
+import 'package:sdctechmedia/ratecard.dart';
+import 'package:sdctechmedia/splash.dart';
+import 'package:sdctechmedia/successdetails.dart';
+import 'package:sdctechmedia/withdrawalfailed.dart';
+import 'package:sdctechmedia/withdrawalpending.dart';
+import 'package:sdctechmedia/withdrawalsuccess.dart';
 
 import 'accountdetails.dart';
 

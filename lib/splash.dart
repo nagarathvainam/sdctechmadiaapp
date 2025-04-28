@@ -1,9 +1,9 @@
 import 'dart:async';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/material.dart';
-import 'package:untitled/dashboard.dart';
-import 'package:untitled/login.dart';
-import 'package:untitled/newlogin.dart';
+import 'package:sdctechmedia/dashboard.dart';
+import 'package:sdctechmedia/login.dart';
+import 'package:sdctechmedia/newlogin.dart';
 
 class SplashPage extends StatefulWidget {
   const SplashPage({super.key, required this.title});
@@ -29,7 +29,11 @@ class _SplashPageState extends State<SplashPage> {
   void initState() {
     // TODO: implement initState
 
-    Timer(const Duration(seconds: 5), handleTimeout);
+    //Timer(const Duration(seconds: 5), handleTimeout);
+
+    Future.delayed(const Duration(seconds: 6), () {
+      print('One second has passed.'); // Prints after 1 second.
+    });
 
     super.initState();
   }
@@ -42,7 +46,7 @@ class _SplashPageState extends State<SplashPage> {
 
     var userid= await prefs.getString('userid');
     print('identify$userid');
-    if(userid!=""){
+    if(userid!="" || userid=="null" && userid==null){
       Navigator.of(context).push(
         MaterialPageRoute(builder: (context) => dashboard()),
       );

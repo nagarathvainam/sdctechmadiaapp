@@ -2,11 +2,11 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:untitled/dashboard.dart';
-import 'package:untitled/newuser.dart';
+import 'package:sdctechmedia/dashboard.dart';
+import 'package:sdctechmedia/newuser.dart';
 
 import 'accountdetails.dart';
-import 'package:untitled/api.dart';
+import 'package:sdctechmedia/api.dart';
 class newlogin extends StatefulWidget {
   @override
   newloginState createState() => newloginState();

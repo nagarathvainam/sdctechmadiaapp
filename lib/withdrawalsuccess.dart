@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
-import 'package:untitled/newuser.dart';
+import 'package:sdctechmedia/newuser.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'accountdetails.dart';
 

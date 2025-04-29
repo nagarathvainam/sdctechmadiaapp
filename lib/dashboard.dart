@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:sdctechmedia/pref_utils.dart';
+import 'package:sdctechmedia/ratecard.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sdctechmedia/newlogin.dart';
 
@@ -175,8 +176,13 @@ class dashboardState extends State{
       tileColor: Colors.blue[800],
       onTap: () {if (title == "Logout") {
         _showLogoutDialog(context); // 🚀 call the same logout dialog
+      } else if (title == "Rate Card") {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => ratecard()),
+        );
       } else {
-        // Handle other taps here if needed
+        // Handle other navigation here if needed
       }},
     );
   }

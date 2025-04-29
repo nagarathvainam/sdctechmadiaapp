@@ -58,8 +58,8 @@ controller: usernameController,
                   ),
                 ),
               ),
-              SizedBox(height: 10),
-              Row(
+              //SizedBox(height: 10),
+             /* Row(
                 children: [
                   Checkbox(
                     value: rememberMe,
@@ -72,7 +72,7 @@ controller: usernameController,
                   ),
                   const Text('Remember me', style: TextStyle(fontSize: 14)),
                 ],
-              ),
+              ),*/
               SizedBox(height: 30),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -146,7 +146,7 @@ controller: usernameController,
                 ],
               ),
 
-              SizedBox(height: 30),
+              /* SizedBox(height: 30),
               Text("Or create using social media"),
 
               Row(
@@ -177,9 +177,9 @@ controller: usernameController,
                     ),
                   ),
                 ],
-              ),
+              ),*/
 
-              Row(
+              /*Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text("Don't have an account? "),
@@ -193,7 +193,7 @@ controller: usernameController,
                     ),
                   ),
                 ],
-              ),
+              ),*/
             ],
           ),
         ),

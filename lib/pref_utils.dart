@@ -33,7 +33,7 @@ class PrefUtils {
     try {
       return _sharedPreferences!.getString('userid')!;
     } catch (e) {
-      return 'primary';
+      return "";
     }
   }
   Future<void> setname(String value) {
@@ -44,7 +44,7 @@ class PrefUtils {
     try {
       return _sharedPreferences!.getString('name')!;
     } catch (e) {
-      return 'primary';
+      return "";
     }
   }
 

@@ -10,10 +10,7 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Bank List',
-      home: adddistributor(),
-    );
+    return MaterialApp(title: 'Bank List', home: adddistributor());
   }
 }
 
@@ -36,12 +33,14 @@ class _adddistributorState extends State<adddistributor> {
 
   Future<void> fetchUsers() async {
     try {
-      final response = await Dio().get('https://sdctech.in/Admin/fAmdm/ratecard_api.php'); // Replace with your endpoint
+      final response = await Dio().get(
+        'https://sdctech.in/Admin/fAmdm/ratecard_api.php',
+      ); // Replace with your endpoint
       setState(() {
         var result = json.decode(response.toString());
         print(response);
         print(response.data[0]);
-        allUsers =result['data'];
+        allUsers = result['data'];
         filteredUsers = allUsers;
         isLoading = false;
       });
@@ -51,11 +50,13 @@ class _adddistributorState extends State<adddistributor> {
   }
 
   void filterSearch(String query) {
-    final results = allUsers.where((user) {
-      final name = user['option'].toString().toLowerCase();
-      final bank = user['amount'].toString().toLowerCase();
-      return name.contains(query.toLowerCase()) || bank.contains(query.toLowerCase());
-    }).toList();
+    final results =
+        allUsers.where((user) {
+          final name = user['option'].toString().toLowerCase();
+          final bank = user['amount'].toString().toLowerCase();
+          return name.contains(query.toLowerCase()) ||
+              bank.contains(query.toLowerCase());
+        }).toList();
 
     setState(() {
       filteredUsers = results;
@@ -65,9 +66,10 @@ class _adddistributorState extends State<adddistributor> {
   Widget buildUserTile(user) {
     return Card(
       child: ListTile(
-
         title: Text(user['option']),
-        subtitle: Text('No Of Show: ${user['no_of_show']}\nAmount: ${user['amount']}\nAmount(Tax): ${user['amount_in_tax']}'),
+        subtitle: Text(
+          'No Of Show: ${user['no_of_show']}\nAmount: ${user['amount']}\nAmount(Tax): ${user['amount_in_tax']}',
+        ),
         isThreeLine: true,
       ),
     );
@@ -77,32 +79,35 @@ class _adddistributorState extends State<adddistributor> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text('Rate Card')),
-      body: isLoading
-          ? Center(child: CircularProgressIndicator())
-          : Column(
-        children: [
-          Padding(
-            padding: EdgeInsets.all(8.0),
-            child: TextField(
-              controller: controller,
-              onChanged: filterSearch,
-              decoration: InputDecoration(
-                hintText: 'Search',
-                prefixIcon: Icon(Icons.search),
-                border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+      body:
+          isLoading
+              ? Center(child: CircularProgressIndicator())
+              : Column(
+                children: [
+                  Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: TextField(
+                      controller: controller,
+                      onChanged: filterSearch,
+                      decoration: InputDecoration(
+                        hintText: 'Search',
+                        prefixIcon: Icon(Icons.search),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    child: ListView.builder(
+                      itemCount: filteredUsers.length,
+                      itemBuilder: (context, index) {
+                        return buildUserTile(filteredUsers[index]);
+                      },
+                    ),
+                  ),
+                ],
               ),
-            ),
-          ),
-          Expanded(
-            child: ListView.builder(
-              itemCount: filteredUsers.length,
-              itemBuilder: (context, index) {
-                return buildUserTile(filteredUsers[index]);
-              },
-            ),
-          )
-        ],
-      ),
     );
   }
 }

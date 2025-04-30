@@ -7,6 +7,7 @@ import 'package:sdctechmedia/newuser.dart';
 
 import 'accountdetails.dart';
 import 'package:sdctechmedia/api.dart';
+
 class newlogin extends StatefulWidget {
   @override
   newloginState createState() => newloginState();
@@ -15,7 +16,7 @@ class newlogin extends StatefulWidget {
 class newloginState extends State<newlogin> {
   bool rememberMe = false;
   bool loading = false;
-  Api db=new Api();
+  Api db = new Api();
   final usernameController = TextEditingController();
   final passwordController = TextEditingController();
   @override
@@ -37,7 +38,7 @@ class newloginState extends State<newlogin> {
               ),
               SizedBox(height: 30),
               TextField(
-controller: usernameController,
+                controller: usernameController,
                 decoration: InputDecoration(
                   prefixIcon: Icon(Icons.email, color: Color(0xffBD1A8D)),
                   hintText: "User ID",
@@ -59,7 +60,7 @@ controller: usernameController,
                 ),
               ),
               //SizedBox(height: 10),
-             /* Row(
+              /* Row(
                 children: [
                   Checkbox(
                     value: rememberMe,
@@ -99,28 +100,35 @@ controller: usernameController,
                     onPressed: () {
                       // Sign-in logic
                       setState(() {
-                        loading==true;
+                        loading == true;
                       });
 
-                      db.login(usernameController.text, passwordController.text).whenComplete(() async {
-                        var responseMessage=db.responseMessage;
-                        if(db.responseCode=="200"){
-                          setState(() {
-                            loading==false;
+                      db
+                          .login(
+                            usernameController.text,
+                            passwordController.text,
+                          )
+                          .whenComplete(() async {
+                            var responseMessage = db.responseMessage;
+                            if (db.responseCode == "200") {
+                              setState(() {
+                                loading == false;
+                              });
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => dashboard(),
+                                ),
+                              );
+                            } else {
+                              setState(() {
+                                loading == false;
+                              });
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(content: Text("$responseMessage")),
+                              );
+                            }
                           });
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) =>  dashboard()),
-                          );
-                        }else{
-                          setState(() {
-                            loading==false;
-                          });
-                          ScaffoldMessenger.of(
-                                 context,
-                               ).showSnackBar(SnackBar(content: Text("$responseMessage")));
-                        }
-                      });
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Color(0xffBD1A8D),
@@ -133,15 +141,18 @@ controller: usernameController,
                       ),
                       elevation: 5,
                     ),
-                    child:(loading==false)? Text(
-                      'LOGIN',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
+                    child:
+                        (loading == false)
+                            ? Text(
+                              'LOGIN',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
 
-                        letterSpacing: 1,
-                      ),
-                    ):CircularProgressIndicator(),
+                                letterSpacing: 1,
+                              ),
+                            )
+                            : CircularProgressIndicator(),
                   ),
                 ],
               ),

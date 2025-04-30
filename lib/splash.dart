@@ -29,8 +29,7 @@ class _SplashPageState extends State<SplashPage> {
   @override
   void initState() {
     // TODO: implement initState
-       Timer(const Duration(seconds: 5), handleTimeout);
-
+    Timer(const Duration(seconds: 5), handleTimeout);
 
     super.initState();
   }
@@ -41,19 +40,17 @@ class _SplashPageState extends State<SplashPage> {
     // Do some work.
     print("Afer 5 seconds called");
 
-    var userid= await prefs.getString('userid');
+    var userid = await prefs.getString('userid');
     print('identify$userid');
-    if(PrefUtils().getuserid()!=""){
-      Navigator.of(context).push(
-        MaterialPageRoute(builder: (context) => dashboard()),
-      );
-
-    }else{
-      Navigator.of(context).push(
-        MaterialPageRoute(builder: (context) => newlogin()),
-      );
+    if (PrefUtils().getuserid() != "") {
+      Navigator.of(
+        context,
+      ).push(MaterialPageRoute(builder: (context) => dashboard()));
+    } else {
+      Navigator.of(
+        context,
+      ).push(MaterialPageRoute(builder: (context) => newlogin()));
     }
-
   }
 
   int _counter = 0;
@@ -81,8 +78,7 @@ class _SplashPageState extends State<SplashPage> {
       body: Center(
         // Center is a layout widget. It takes a single child and positions it
         // in the middle of the parent.
-        child: const CircularProgressIndicator(
-          color: Color(0xffBD1A8D),)
+        child: const CircularProgressIndicator(color: Color(0xffBD1A8D)),
       ),
       // This trailing comma makes auto-formatting nicer for build methods.
     );

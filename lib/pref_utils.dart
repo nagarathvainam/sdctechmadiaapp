@@ -36,6 +36,7 @@ class PrefUtils {
       return "";
     }
   }
+
   Future<void> setname(String value) {
     return _sharedPreferences!.setString('name', value);
   }
@@ -60,6 +61,5 @@ class PrefUtils {
     }
   }
 
-
-// Fund Transfer Data Storage
+  // Fund Transfer Data Storage
 }

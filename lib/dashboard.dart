@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:sdctechmedia/addratecard.dart';
 import 'package:sdctechmedia/pref_utils.dart';
 import 'package:sdctechmedia/ratecard.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -10,58 +11,53 @@ import 'accountdetails.dart';
 
 class dashboard extends StatefulWidget {
   @override
-  dashboardState createState() => dashboardState(
-
-  );
-
+  dashboardState createState() => dashboardState();
 }
 
-class dashboardState extends State{
+class dashboardState extends State {
+  bool loading = false;
 
   @override
-  void initState() {
-
-  }
+  void initState() {}
   void _showLogoutDialog(BuildContext context) {
     showDialog(
       context: context,
-      builder: (context) => AlertDialog(
-        title: Text('Logout'),
-        content: Text('Are you sure you want to logout?'),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(), // Close dialog
-            child: Text('Cancel'),
+      builder:
+          (context) => AlertDialog(
+            title: Text('Logout'),
+            content: Text('Are you sure you want to logout?'),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.of(context).pop(), // Close dialog
+                child: Text('Cancel'),
+              ),
+              TextButton(
+                onPressed: () {
+                  PrefUtils().setuserid("");
+                  Navigator.of(context).pop(); // Close dialog
+
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text('Logged out successfully!'),
+                      backgroundColor: Colors.green,
+                      // duration: Duration(seconds: 2),
+                    ),
+                  );
+
+                  //Future.delayed(Duration(seconds: 2), () {
+                  //Navigator.of(context).pushNamedAndRemoveUntil('/login', (route) => false);
+
+                  Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(builder: (context) => newlogin()),
+                    (e) => false,
+                  );
+                  // });
+                },
+                child: Text('Logout'),
+              ),
+            ],
           ),
-          TextButton(
-            onPressed: () {
-              PrefUtils().setuserid("");
-              Navigator.of(context).pop(); // Close dialog
-
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text('Logged out successfully!'),
-                  backgroundColor: Colors.green,
-                 // duration: Duration(seconds: 2),
-                ),
-              );
-
-              //Future.delayed(Duration(seconds: 2), () {
-                //Navigator.of(context).pushNamedAndRemoveUntil('/login', (route) => false);
-
-                Navigator.pushAndRemoveUntil(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => newlogin(),
-                  ),
-                      (e) => false,
-                );
-             // });
-            },
-            child: Text('Logout'),
-          ),
-        ],
-      ),
     );
   }
 
@@ -73,7 +69,6 @@ class dashboardState extends State{
   ];
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       drawer: Drawer(
         child: ListView(
@@ -86,15 +81,24 @@ class dashboardState extends State{
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   CircleAvatar(
-
-                      child:Image.asset('assets/logo.png', height:30,width: 30,)
+                    child: Image.asset(
+                      'assets/logo.png',
+                      height: 30,
+                      width: 30,
+                    ),
                   ), // replace with your logo path
-
                 ],
               ),
             ),
-            SizedBox(height:5),
-            Text("Services", style: TextStyle(color: Colors.blue, fontSize: 16,fontWeight: FontWeight.bold)),
+            SizedBox(height: 5),
+            Text(
+              "Services",
+              style: TextStyle(
+                color: Colors.blue,
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
             _buildDrawerItem(Icons.movie, "Release Order"),
             _buildDrawerItem(Icons.people, "Producers/Distributors"),
             _buildDrawerItem(Icons.money, "Rate Card"),
@@ -103,39 +107,46 @@ class dashboardState extends State{
             _buildDrawerItem(Icons.local_movies, "Movies"),
             _buildDrawerItem(Icons.map, "States"),
             SizedBox(height: 10),
-            Text("Admin", style: TextStyle(color: Colors.blue, fontSize: 16,fontWeight: FontWeight.bold)),
+            Text(
+              "Admin",
+              style: TextStyle(
+                color: Colors.blue,
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
             _buildDrawerItem(Icons.settings_cell, "Settings"),
-            _buildDrawerItem(Icons.account_circle_outlined,"Admin User"),
+            _buildDrawerItem(Icons.account_circle_outlined, "Admin User"),
             _buildDrawerItem(Icons.password, "Change Password"),
             _buildDrawerItem(Icons.logout, "Logout"),
-
           ],
         ),
       ),
       appBar: AppBar(
         leading: Builder(
-        builder: (context) => IconButton(
-          icon: Image.asset(
-            'assets/logo.png', // replace with your logo image path
-            height: 50,
-            width: 50,
-          ),
-          onPressed: () {
-            Scaffold.of(context).openDrawer(); // this opens the drawer
-          },
+          builder:
+              (context) => IconButton(
+                icon: Image.asset(
+                  'assets/logo.png', // replace with your logo image path
+                  height: 50,
+                  width: 50,
+                ),
+                onPressed: () {
+                  Scaffold.of(context).openDrawer(); // this opens the drawer
+                },
+              ),
         ),
-        ),
-        title: Text("Name:"+PrefUtils().getname()),
+        title: Text("Name:" + PrefUtils().getname()),
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 20),
             child: IconButton(
               icon: Icon(Icons.power_settings_new, color: Colors.black),
               onPressed: () {
-                _showLogoutDialog(context);// handle logout or exit logic here
+                _showLogoutDialog(context); // handle logout or exit logic here
               },
             ),
-          )
+          ),
         ],
       ),
       body: Padding(
@@ -145,25 +156,31 @@ class dashboardState extends State{
           crossAxisSpacing: 10,
           mainAxisSpacing: 10,
           childAspectRatio: 1.2,
-          children: stats.map((item) {
-            return Container(
-              decoration: BoxDecoration(
-                color: item["color"],
-                borderRadius: BorderRadius.circular(10),
-              ),
-              padding: const EdgeInsets.all(10),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(item["value"], style: TextStyle(fontSize: 22, color: Colors.white)),
-                  SizedBox(height: 6),
-                  Text(item["title"],
-                      textAlign: TextAlign.center,
-                      style: TextStyle(fontSize: 14, color: Colors.white)),
-                ],
-              ),
-            );
-          }).toList(),
+          children:
+              stats.map((item) {
+                return Container(
+                  decoration: BoxDecoration(
+                    color: item["color"],
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  padding: const EdgeInsets.all(10),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        item["value"],
+                        style: TextStyle(fontSize: 22, color: Colors.white),
+                      ),
+                      SizedBox(height: 6),
+                      Text(
+                        item["title"],
+                        textAlign: TextAlign.center,
+                        style: TextStyle(fontSize: 14, color: Colors.white),
+                      ),
+                    ],
+                  ),
+                );
+              }).toList(),
         ),
       ),
     );
@@ -174,17 +191,22 @@ class dashboardState extends State{
       leading: Icon(icon, color: Colors.white),
       title: Text(title, style: TextStyle(color: Colors.white)),
       tileColor: Colors.blue[800],
-      onTap: () {if (title == "Logout") {
-        _showLogoutDialog(context); // 🚀 call the same logout dialog
-      } else if (title == "Rate Card") {
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => ratecard()),
-        );
-      } else {
-        // Handle other navigation here if needed
-      }},
+      onTap: () {
+        if (title == "Logout") {
+          _showLogoutDialog(context); // 🚀 call the same logout dialog
+        } else if (title == "Rate Card") {
+          setState(() {
+            loading == true;
+          });
+
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => RateCard()),
+          );
+        } else {
+          // Handle other navigation here if needed
+        }
+      },
     );
   }
 }
-

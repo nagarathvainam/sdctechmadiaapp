@@ -16,7 +16,7 @@ class CameraPage extends StatefulWidget {
 }
 
 class _CameraPageState extends State<CameraPage> {
-  String resurl="";
+  String resurl = "";
   CameraController? _controller;
   int _selectedCameraIdx = 0;
   bool _isCameraInitialized = false;
@@ -54,7 +54,10 @@ class _CameraPageState extends State<CameraPage> {
     if (_controller == null || !_controller!.value.isInitialized) return;
 
     final tempDir = await getTemporaryDirectory();
-    final filePath = join(tempDir.path, '${DateTime.now().millisecondsSinceEpoch}.jpg');
+    final filePath = join(
+      tempDir.path,
+      '${DateTime.now().millisecondsSinceEpoch}.jpg',
+    );
 
     try {
       final XFile file = await _controller!.takePicture();
@@ -68,7 +71,9 @@ class _CameraPageState extends State<CameraPage> {
   }
 
   Future<void> _sendToApi(String base64Image) async {
-    final url = Uri.parse("https://sdctech.in/Admin/fAmdm/settings_upload_api.php"); // Replace with real URL
+    final url = Uri.parse(
+      "https://sdctech.in/Admin/fAmdm/settings_upload_api.php",
+    ); // Replace with real URL
 
     try {
       final response = await http.post(
@@ -80,7 +85,7 @@ class _CameraPageState extends State<CameraPage> {
       if (response.statusCode == 200) {
         var data = json.decode(response.body);
         setState(() {
-          resurl=data['url'];
+          resurl = data['url'];
         });
 
         print(data['url']);
@@ -106,29 +111,26 @@ class _CameraPageState extends State<CameraPage> {
   @override
   Widget build(BuildContext context) {
     if (widget.cameras.isEmpty) {
-      return Scaffold(
-        body: Center(child: Text("No cameras found")),
-      );
+      return Scaffold(body: Center(child: Text("No cameras found")));
     }
 
     return Scaffold(
       appBar: AppBar(
         title: Text("Camera Capture"),
         actions: [
-          IconButton(
-            icon: Icon(Icons.switch_camera),
-            onPressed: _switchCamera,
-          ),
+          IconButton(icon: Icon(Icons.switch_camera), onPressed: _switchCamera),
         ],
       ),
-      body: SingleChildScrollView(child:Column(
-        children: [
-          (resurl!='')?Text(resurl):SizedBox(),
-          _isCameraInitialized
-              ? CameraPreview(_controller!)
-              : Center(child: CircularProgressIndicator()),
-        ],
-      )),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            (resurl != '') ? Text(resurl) : SizedBox(),
+            _isCameraInitialized
+                ? CameraPreview(_controller!)
+                : Center(child: CircularProgressIndicator()),
+          ],
+        ),
+      ),
       floatingActionButton: FloatingActionButton(
         onPressed: _captureAndSend,
         child: Icon(Icons.camera),

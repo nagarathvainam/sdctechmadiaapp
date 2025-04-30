@@ -37,7 +37,7 @@ class forgetpasswordState extends State<forgetpassword> {
               child: CircleAvatar(
                 radius: 60,
                 backgroundColor: Colors.white12,
-                child:Center(child: Image.asset("assets/logo.png"))
+                child: Center(child: Image.asset("assets/logo.png")),
                 //Icon(Icons.lock, color: Colors.orange, size: 40),
               ),
             ),

@@ -6,15 +6,7 @@ import 'package:sdctechmedia/addratecard.dart';
 import 'package:sdctechmedia/newlogin.dart';
 import 'package:sdctechmedia/pref_utils.dart';
 
-// class MyApp extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     return MaterialApp(
-//       title: 'Bank List',
-//       home: adddistributor(),
-//     );
-//   }
-// }
+
 
 class RateCard extends StatefulWidget {
   @override

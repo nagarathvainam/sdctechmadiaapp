@@ -29,6 +29,7 @@ class Api {
       responseMessage = result['responseMessage'];
       responseCode = result['responseCode'];
       userid = result['data']['id'];
+      print('logged id$userid');
       name = result['data']['name'];
       // await prefs.setString('userid', userid);
       PrefUtils().setuserid(userid);
@@ -49,31 +50,46 @@ class Api {
   }
   addratecard(option, noofshow, amount, amountintax) async {
     // final SharedPreferences prefs = await SharedPreferences.getInstance();
-    var headers = {'Cookie': 'PHPSESSID=ohsccuokdm98cjfsqn054u8oi0'};
-    var data = json.encode({'option': '$option', 'noofshow': '$noofshow','amount': '$amount','amount_in_tax': '$amountintax','user_id': PrefUtils().getuserid()});
 
-    var dio = Dio();
-    var response = await dio.request(
-      'https://sdctech.in/Admin/fAmdm/create_update_rate_card_api.php',
-      options: Options(method: 'POST', headers: headers),
-      data: data,
-    );
+    try{
+      var headers = {'Cookie': 'PHPSESSID=ohsccuokdm98cjfsqn054u8oi0'};
+      var data = json.encode({'option': '$option', 'noofshow': '$noofshow','amount': '$amount','amount_in_tax': '$amountintax','user_id': PrefUtils().getuserid()});
 
-    if (response.statusCode == 200) {
-      var result = json.decode(response.toString());
-      responseMessage = result['responseMessage'];
-      responseCode = result['responseCode'];
-      print(responseMessage);
-      print(responseCode);
-      //String snackBar = SnackBar(content: Text("$responseMessage"));
+      var dio = Dio();
+      var response = await dio.request(
+        'https://sdctech.in/Admin/fAmdm/create_update_rate_card_api.php',
+        options: Options(method: 'POST', headers: headers),
+        data: data,
+      );
 
-      // Find the ScaffoldMessenger in the widget tree
-      // and use it to show a SnackBar.
-      // ScaffoldMessenger.of(
-      //   context,
-      // ).showSnackBar(SnackBar(content: Text("$responseMessage")));
-    } else {
-      print(response.statusMessage);
+      if (response.statusCode == 200) {
+        var result = json.decode(response.toString());
+        responseMessage = result['responseMessage'];
+        responseCode = result['responseCode'];
+        print(responseMessage);
+        print(responseCode);
+        //String snackBar = SnackBar(content: Text("$responseMessage"));
+
+        // Find the ScaffoldMessenger in the widget tree
+        // and use it to show a SnackBar.
+        // ScaffoldMessenger.of(
+        //   context,
+        // ).showSnackBar(SnackBar(content: Text("$responseMessage")));
+      } else {
+        print(response.statusMessage);
+      }
     }
+   on DioException catch (e) {
+  //responseCode = e.response!.statusCode as String;
+  //responseMessage=result['responseMessage'];
+  print('GSTVerify Status code: ${e.response?.statusCode}');
+  print('GSTVerify data: ${e.response?.data}');
+  var errresult = json.encode(e.response?.data);
+  print(errresult);
+  responseCode = "400";
+  responseMessage = "GST fetch failed/ Wrong details entered";
+
+  return "Failure!";
+  }
   }
 }

@@ -40,8 +40,9 @@ class _SplashPageState extends State<SplashPage> {
     // Do some work.
     print("Afer 5 seconds called");
 
-    var userid = await prefs.getString('userid');
-    print('identify$userid');
+
+    print('identify');
+    print(PrefUtils().getname());
     if (PrefUtils().getuserid() != "") {
       Navigator.of(
         context,

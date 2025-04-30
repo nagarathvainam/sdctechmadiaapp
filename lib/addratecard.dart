@@ -125,7 +125,9 @@ final amountintaxController = TextEditingController();
                       db.addratecard(OptionsController.text, NoofshowController.text, amountController.text, amountintaxController.text)
                           .whenComplete(() async {
                         var responseMessage = db.responseMessage;
+                        print(db.responseCode);
                         if (db.responseCode == "200") {
+
                           setState(() {
                             loading == true;
                           });
@@ -138,7 +140,8 @@ final amountintaxController = TextEditingController();
                               builder: (context) => RateCard(),
                             ),
                           );
-                        } else {
+                        }
+                        else {
                           setState(() {
                             loading == false;
                           });

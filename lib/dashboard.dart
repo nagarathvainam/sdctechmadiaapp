@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:sdctechmedia/addratecard.dart';
+import 'package:sdctechmedia/distributorproducer.dart';
 import 'package:sdctechmedia/pref_utils.dart';
 import 'package:sdctechmedia/ratecard.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -76,7 +77,7 @@ class dashboardState extends State {
           children: [
             DrawerHeader(
               padding: EdgeInsets.all(12),
-              decoration: BoxDecoration(color: Colors.blue[900]),
+              decoration: BoxDecoration(color: Color(0xffA3238E)),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -91,10 +92,12 @@ class dashboardState extends State {
               ),
             ),
             SizedBox(height: 5),
+
+
             Text(
               "Services",
               style: TextStyle(
-                color: Colors.blue,
+                color: Color(0xff6C2C91),
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
               ),
@@ -110,7 +113,7 @@ class dashboardState extends State {
             Text(
               "Admin",
               style: TextStyle(
-                color: Colors.blue,
+                color: Color(0xff6C2C91),
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
               ),
@@ -190,7 +193,7 @@ class dashboardState extends State {
     return ListTile(
       leading: Icon(icon, color: Colors.white),
       title: Text(title, style: TextStyle(color: Colors.white)),
-      tileColor: Colors.blue[800],
+      tileColor: Color(0xffA3238E),
       onTap: () {
         if (title == "Logout") {
           _showLogoutDialog(context); // 🚀 call the same logout dialog
@@ -202,6 +205,11 @@ class dashboardState extends State {
           Navigator.push(
             context,
             MaterialPageRoute(builder: (context) => RateCard()),
+          );
+        }else if (title == "Producers/Distributors") {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => DistributorProducer()),
           );
         } else {
           // Handle other navigation here if needed

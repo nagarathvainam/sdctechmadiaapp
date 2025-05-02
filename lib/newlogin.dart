@@ -153,7 +153,7 @@ class newloginState extends State<newlogin> {
                               ),
                             )
                             : SizedBox(
-width: 20,
+                            width: 20,
                             height: 20,
                             child:CircularProgressIndicator(color: Colors.white,)),
                   ),

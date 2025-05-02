@@ -119,7 +119,7 @@ final amountintaxController = TextEditingController();
                     onPressed: ()  {
                       // Sign-in logic
                       setState(() {
-                        loading == true;
+                        loading = true;
                       });
 
                       db.addratecard(OptionsController.text, NoofshowController.text, amountController.text, amountintaxController.text)
@@ -129,7 +129,7 @@ final amountintaxController = TextEditingController();
                         if (db.responseCode == "200") {
 
                           setState(() {
-                            loading == true;
+                            loading =true;
                           });
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(content: Text("$responseMessage")),
@@ -143,7 +143,7 @@ final amountintaxController = TextEditingController();
                         }
                         else {
                           setState(() {
-                            loading == false;
+                            loading = false;
                           });
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(content: Text("$responseMessage")),
@@ -153,7 +153,7 @@ final amountintaxController = TextEditingController();
                     },
 
 
-                    child:(loading==false)? Text(
+                    child:(loading=false)? Text(
                       'ADD',
                       style: TextStyle(
                         color: Colors.white,

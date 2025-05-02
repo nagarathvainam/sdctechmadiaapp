@@ -100,7 +100,7 @@ class newloginState extends State<newlogin> {
                     onPressed: () {
                       // Sign-in logic
                       setState(() {
-                        loading == true;
+                        loading = true;
                       });
 
                       db
@@ -112,7 +112,7 @@ class newloginState extends State<newlogin> {
                             var responseMessage = db.responseMessage;
                             if (db.responseCode == "200") {
                               setState(() {
-                                loading == false;
+                                loading = false;
                               });
                               Navigator.push(
                                 context,
@@ -122,7 +122,7 @@ class newloginState extends State<newlogin> {
                               );
                             } else {
                               setState(() {
-                                loading == false;
+                                loading =false;
                               });
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(content: Text("$responseMessage")),
@@ -152,7 +152,10 @@ class newloginState extends State<newlogin> {
                                 letterSpacing: 1,
                               ),
                             )
-                            : CircularProgressIndicator(),
+                            : SizedBox(
+width: 20,
+                            height: 20,
+                            child:CircularProgressIndicator(color: Colors.white,)),
                   ),
                 ],
               ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:sdctechmedia/adddistributor.dart';
 import 'package:sdctechmedia/bottomsheet.dart';
 import 'package:sdctechmedia/dashboard.dart';
@@ -7,6 +8,7 @@ import 'package:sdctechmedia/forgetpassword.dart';
 import 'package:sdctechmedia/newlogin.dart';
 import 'package:sdctechmedia/newuser.dart';
 import 'package:sdctechmedia/login.dart';
+import 'package:sdctechmedia/pref_utils.dart';
 import 'package:sdctechmedia/ratecard.dart';
 import 'package:sdctechmedia/splash.dart';
 import 'package:sdctechmedia/successdetails.dart';
@@ -17,6 +19,14 @@ import 'package:sdctechmedia/withdrawalsuccess.dart';
 import 'accountdetails.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  Future.wait([
+    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]),
+    PrefUtils().init(),
+  ]).then((value) {
+print("Init Value:");
+print(value);
+  });
   runApp(const MyApp());
 }
 

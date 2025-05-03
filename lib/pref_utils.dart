@@ -60,6 +60,27 @@ class PrefUtils {
       return 0;
     }
   }
+  Future<void> setdistributorcircuit(String value) {
+    return _sharedPreferences!.setString('adddistflimcirciut', value);
+  }
 
+  String getdistributorcircuit() {
+    try {
+      return _sharedPreferences!.getString('adddistflimcirciut')!;
+    } catch (e) {
+      return "";
+    }
+  }
+  Future<void> setsameasbilling(String value) {
+    return _sharedPreferences!.setString('sameasbilling', value);
+  }
+
+  String getsameasbilling() {
+    try {
+      return _sharedPreferences!.getString('sameasbilling')!;
+    } catch (e) {
+      return "";
+    }
+  }
   // Fund Transfer Data Storage
 }

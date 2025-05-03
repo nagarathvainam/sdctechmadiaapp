@@ -3,6 +3,7 @@ import 'package:sdctechmedia/api.dart';
 import 'package:dio/dio.dart';
 import 'package:sdctechmedia/distributorproducer.dart';
 import 'package:sdctechmedia/enteramount.dart';
+import 'package:sdctechmedia/pref_utils.dart';
 import 'package:sdctechmedia/ratecard.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
@@ -51,8 +52,11 @@ class _AddDistributorProducerState extends State<AddDistributorProducer> {
   getStateData();
     super.initState();
   }
+  bool isChecked=false;
+  
   @override
   Widget build(BuildContext context) {
+
 
     return Scaffold(
       appBar: AppBar(
@@ -96,43 +100,40 @@ class _AddDistributorProducerState extends State<AddDistributorProducer> {
                   SizedBox(height: 30),
 
                   SizedBox(
-                      height: 55.0,
-                      child: FormBuilderDropdown<String>(
-                        name: 'stateRefID',
-
-                        // controller: TextEditingstateRefID,
-                        //initialValue: '1',
-                        decoration: InputDecoration(
-                          border: OutlineInputBorder(
-                            borderRadius:
-                            BorderRadius.circular(10.0),
-                            borderSide: BorderSide(
-                                width: 3,
-                                color: Color(0xFFC8C8C8)),
+                    height: 55.0,
+                    child: DropdownButtonFormField<String>(
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                          borderSide: const BorderSide(
+                            width: 3,
+                            color: Color(0xFFC8C8C8),
                           ),
-
-                          hintText: 'Select State',
                         ),
-                        items:  statedata.map((item) {
-                          return new DropdownMenuItem(
-                            child: new Text(item['state']),
-                            value: item['stateRefID'].toString(),
-                            //controller: TextEditingstateRefID,
-                          );
-                        }).toList(),
-                        onChanged: (val) {
-                          setState(() {
-                            //_selectedSate=val;
-                            //stateRefID=val.toString();
-                          });
-                        },
-                        // initialValue: _selectedSate,
-                        validator: FormBuilderValidators.compose([
-                          FormBuilderValidators.required(),
-                        ]),
-                        valueTransformer: (val) =>
-                            val?.toString(),
-                      )),
+                        hintText: 'Select State',
+                      ),
+                      //value: _selectedState, // Initial selected value (optional)
+                      items: statedata.map<DropdownMenuItem<String>>((item) {
+                        return DropdownMenuItem<String>(
+
+                          value: item['id'].toString(),
+                          child: Text(item['state_name']),
+                        );
+                      }).toList(),
+                      onChanged: (val) {
+                        setState(() {
+                          PrefUtils().setdistributorcircuit(val.toString());
+                          //_selectedState = val.toString();
+                        });
+                      },
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please select a state';
+                        }
+                        return null;
+                      },
+                    ),
+                  ),
                   /*TextField(
                     //keyboardType:TextInputType.number,
 
@@ -150,7 +151,7 @@ class _AddDistributorProducerState extends State<AddDistributorProducer> {
                     // onChanged: (text) {
                     //   ContactnumberController.text= (int.parse(text)*18/100).toString();
                     //  },
-
+                    maxLength: 10,
                     keyboardType:TextInputType.number,
                     controller: ContactnumberController,
                     decoration: InputDecoration(
@@ -172,14 +173,38 @@ class _AddDistributorProducerState extends State<AddDistributorProducer> {
                     controller: addressController,
                     decoration: InputDecoration(
 
-                      hintText: "Address",
+                      hintText: "BIlling Address",
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(30.0),
 
                       ),
                     ),
                   ),
-                  SizedBox(height: 30),
+
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Checkbox(
+                        value: isChecked,
+                        onChanged: (bool? value) {
+                          print(value);
+                          setState(() {
+                            if(value==true){
+                              ShippingaddressController.text=addressController.text;
+                              PrefUtils().setsameasbilling("1");
+
+                            }
+                            else{
+                              ShippingaddressController.text="";
+                              PrefUtils().setsameasbilling("0");
+                            }
+                            isChecked = value ?? false;
+                          });
+                        },
+                      ),
+                      const Text('Same As Billing?'),
+                    ],
+                  ),
                   TextField(
                     // onChanged: (text) {
                     //   ContactnumberController.text= (int.parse(text)*18/100).toString();
@@ -196,23 +221,17 @@ class _AddDistributorProducerState extends State<AddDistributorProducer> {
                       ),
                     ),
                   ),
-                  SizedBox(height: 30),
-                  TextField(
-                    // onChanged: (text) {
-                    //   ContactnumberController.text= (int.parse(text)*18/100).toString();
-                    //  },
 
-
+                  /*TextField(
                     controller: sameaddressController,
                     decoration: InputDecoration(
-
-                      hintText: "Same Address",
+                      hintText: "Sa",
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(30.0),
-
                       ),
                     ),
-                  ),
+                  ),*/
+
                   SizedBox(height: 30),
                   TextField(
                     //keyboardType:TextInputType.number,
@@ -225,20 +244,10 @@ class _AddDistributorProducerState extends State<AddDistributorProducer> {
 
                       ),
                     ),
-                  ),
-                  SizedBox(height: 30),
-                  TextField(
-                    //keyboardType:TextInputType.number,
-                    controller: state,
-                    decoration: InputDecoration(
 
-                      hintText: "State",
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(30.0),
-
-                      ),
-                    ),
                   ),
+
+
                   SizedBox(height: 30),
                   TextField(
                     //keyboardType:TextInputType.number,
@@ -330,13 +339,24 @@ class _AddDistributorProducerState extends State<AddDistributorProducer> {
                           setState(() {
                             loading = true;
                           });
+                          final emailRegex = RegExp(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$');
+                          if (ContactEmailController.text == null || ContactEmailController.text!='') {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(content: Text("Please Enter Email")),
+                            );
+                          }else if (!emailRegex.hasMatch(ContactEmailController.text)) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(content: Text("Enter a valid email address")),
+                            );
 
-                          db.adddistributor(DistributorProducerController.text,FilmCircuitAreaController.text,
-                            ContactpersonController.text,ContactnumberController.text,addressController.text,
-                              ShippingaddressController.text,sameaddressController.text,state.text,
-                              ContactEmailController.text,GstController.text,CompanyVatTinController.text,
+                          }else{
+
+                          db.adddistributor(DistributorProducerController.text,PrefUtils().getdistributorcircuit(),
+                              addressController.text,ShippingaddressController.text,PrefUtils().getsameasbilling(),GstController.text,
+                              ContactnumberController.text,ContactpersonController.text,ContactEmailController.text,
+                              CompanyVatTinController.text,
                               CompanyCstNumController.text,CompanyServiceTaxNumberController.text,
-                              CompanyPanNUmberController.text)
+                              CompanyPanNUmberController.text,state.text,)
                               .whenComplete(() async {
                             var responseMessage = db.responseMessage;
                             print(db.responseCode);
@@ -348,13 +368,17 @@ class _AddDistributorProducerState extends State<AddDistributorProducer> {
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(content: Text("$responseMessage")),
                               );
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => RateCard(),
-                                ),
-                              );
+                              Future.delayed(Duration(seconds: 2), () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => DistributorProducer(),
+                                  ),
+                                );
+                              });
+
                             }
+
                             else {
                               setState(() {
                                 loading = false;
@@ -363,7 +387,7 @@ class _AddDistributorProducerState extends State<AddDistributorProducer> {
                                 SnackBar(content: Text("$responseMessage")),
                               );
                             }
-                          });
+                          });}
                         },
 
 

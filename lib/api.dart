@@ -101,9 +101,10 @@ class Api {
       var data = json.encode({'producer_distributor_name': '$producerdistributorName', 'film_circuit_area': '$filmcircuitarea',
         'address': '$address','ship_address': '$shipaddress','same_as_shipping': '$sameasshipping',
         'gst': '$gst','contact_number': '$contactnumber','contact_person': '$contactperson',
-        'email': '$contactemail','company_vat_tin': '$companyvattin','company_cst_no': '$companycstno','company_service_tax_no': '$companyservicetaxno',
+        'email': '$contactemail','company_vat_tin': '$companyvattin','company_cst_no': '$companycstno',
+        'company_service_tax_no': '$companyservicetaxno',
         'company_pan': '$companypan','state': '$state','user_id': PrefUtils().getuserid()});
-
+print(data);
       var dio = Dio();
       var response = await dio.request(
         'https://sdctech.in/Admin/fAmdm/create_update_distributor_api',
@@ -113,7 +114,9 @@ class Api {
 
       if (response.statusCode == 200) {
         var result = json.decode(response.toString());
+        print("add distributor response msg");
         responseMessage = result['responseMessage'];
+        print("add distributor response code");
         responseCode = result['responseCode'];
         print(responseMessage);
         print(responseCode);
@@ -144,15 +147,13 @@ class Api {
 List statedata=[];
   Future<String> getStateData() async {
     var headers = {
-      'Cookie': 'PHPSESSID=7d31q659dv01r69mrvfjrhqiu5'
+      'Content-Type': 'application/json',
+      'Cookie': 'PHPSESSID=j8t9056piln0fg7qi73ioggb64',
     };
     var dio = Dio();
     var response = await dio.request(
-      'https://sdctech.in/Admin/fAmdm/film_circuit_area_api.php',
-      options: Options(
-        method: 'POST',
-        headers: headers,
-      ),
+        'https://sdctech.in/Admin/fAmdm/film_circuit_area_api.php',
+      options: Options(method: 'POST', headers: headers),
     );
 print("response.statusCode");
 print(response.statusCode);

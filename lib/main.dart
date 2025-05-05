@@ -15,6 +15,8 @@ import 'package:sdctechmedia/successdetails.dart';
 import 'package:sdctechmedia/withdrawalfailed.dart';
 import 'package:sdctechmedia/withdrawalpending.dart';
 import 'package:sdctechmedia/withdrawalsuccess.dart';
+import 'package:sdctechmedia/language.dart';
+import 'package:sdctechmedia/listsilideaction.dart';
 
 import 'accountdetails.dart';
 

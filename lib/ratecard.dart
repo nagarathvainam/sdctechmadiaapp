@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
 import 'package:sdctechmedia/addratecard.dart';
 import 'package:sdctechmedia/distributorproducer.dart';
+import 'package:sdctechmedia/language.dart';
 import 'package:sdctechmedia/newlogin.dart';
 import 'package:sdctechmedia/pref_utils.dart';
 
@@ -272,8 +273,13 @@ class _RateCardState extends State<RateCard> {
             context,
             MaterialPageRoute(builder: (context) => DistributorProducer()),
           );
-        }
-        else {
+        }else if (title == "Language") {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => Language()),
+          );
+
+        } else {
           // Handle other navigation here if needed
         }
       },

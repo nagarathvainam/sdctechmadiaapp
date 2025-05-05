@@ -3,20 +3,19 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
 import 'package:sdctechmedia/adddistributorproducer.dart';
+import 'package:sdctechmedia/addlanguage.dart';
 import 'package:sdctechmedia/addratecard.dart';
-import 'package:sdctechmedia/language.dart';
+import 'package:sdctechmedia/distributorproducer.dart';
 import 'package:sdctechmedia/newlogin.dart';
 import 'package:sdctechmedia/pref_utils.dart';
 import 'package:sdctechmedia/ratecard.dart';
 
-
-
-class DistributorProducer extends StatefulWidget {
+class Language extends StatefulWidget {
   @override
-  _DistributorProducerState createState() => _DistributorProducerState();
+  _LanguageState createState() => _LanguageState();
 }
 
-class _DistributorProducerState extends State<DistributorProducer> {
+class _LanguageState extends State<Language> {
   List<dynamic> allUsers = [];
   List<dynamic> filteredUsers = [];
   TextEditingController controller = TextEditingController();
@@ -37,7 +36,7 @@ class _DistributorProducerState extends State<DistributorProducer> {
     };
     var dio = Dio();
     var response = await dio.request(
-      'https://sdctech.in/Admin/fAmdm/distributor_api.php',
+      'https://sdctech.in/Admin/fAmdm/language_api.php',
       options: Options(method: 'POST', headers: headers),
     );
 
@@ -72,10 +71,10 @@ class _DistributorProducerState extends State<DistributorProducer> {
   void filterSearch(String query) {
     final results =
     allUsers.where((user) {
-      final name = user['producer_distributor_name'].toString().toLowerCase();
-      final bank = user['contact_number'].toString().toLowerCase();
-      return name.contains(query.toLowerCase()) ||
-          bank.contains(query.toLowerCase());
+      final name = user['language_name'].toString().toLowerCase();
+     // final bank = user['contact_number'].toString().toLowerCase();
+      return name.contains(query.toLowerCase()) ;
+         // ||bank.contains(query.toLowerCase());
     }).toList();
 
     setState(() {
@@ -86,8 +85,11 @@ class _DistributorProducerState extends State<DistributorProducer> {
   Widget buildUserTile(user) {
     return Card(
       child: ListTile(
-        title: Text(user['producer_distributor_name']),
-        subtitle: Text('Contact Person: ${user['contact_person']}\nContact Number: ${user['contact_number']}'),
+       // title: Text(user['language_name']),
+        subtitle: Text('Language: ${user['language_name']}',
+          style: TextStyle(
+          fontWeight: FontWeight.bold,
+          fontSize: 24,)),
         isThreeLine: true,
       ),
     );
@@ -191,7 +193,7 @@ class _DistributorProducerState extends State<DistributorProducer> {
         ),
       ),
       appBar: AppBar(
-        title: Text('Producers/Distributors'),
+        title: Text('Language'),
         leading: Builder(
           builder:
               (context) => IconButton(
@@ -210,7 +212,7 @@ class _DistributorProducerState extends State<DistributorProducer> {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => AddDistributorProducer()),
+                MaterialPageRoute(builder: (context) => AddLanguage()),
               );
             },
             child: Icon(Icons.add_circle_outline),
@@ -268,7 +270,9 @@ class _DistributorProducerState extends State<DistributorProducer> {
             context,
             MaterialPageRoute(builder: (context) => DistributorProducer()),
           );
-        }else if (title == "Language") {
+
+        }
+        else if (title == "Language") {
           Navigator.push(
             context,
             MaterialPageRoute(builder: (context) => Language()),

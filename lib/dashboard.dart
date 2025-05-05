@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:sdctechmedia/addratecard.dart';
 import 'package:sdctechmedia/distributorproducer.dart';
+import 'package:sdctechmedia/language.dart';
 import 'package:sdctechmedia/pref_utils.dart';
 import 'package:sdctechmedia/ratecard.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -211,6 +212,12 @@ class dashboardState extends State {
             context,
             MaterialPageRoute(builder: (context) => DistributorProducer()),
           );
+        }else if (title == "Language") {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => Language()),
+          );
+
         } else {
           // Handle other navigation here if needed
         }

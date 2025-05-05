@@ -104,7 +104,7 @@ final amountintaxController = TextEditingController();
                 children: [
 
                   SizedBox(height: 30),
-                  ElevatedButton(
+                  (loading==false)? ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Color(0xffBD1A8D),
                       shape: RoundedRectangleBorder(
@@ -129,7 +129,7 @@ final amountintaxController = TextEditingController();
                         if (db.responseCode == "200") {
 
                           setState(() {
-                            loading =true;
+                            loading =false;
                           });
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(content: Text("$responseMessage")),
@@ -153,7 +153,7 @@ final amountintaxController = TextEditingController();
                     },
 
 
-                    child:(loading=false)? Text(
+                    child: Text(
                       'ADD',
                       style: TextStyle(
                         color: Colors.white,
@@ -161,8 +161,8 @@ final amountintaxController = TextEditingController();
 
                         letterSpacing: 1,
                       ),
-                    ):CircularProgressIndicator(),
-                  ),
+                    ),
+                  ):CircularProgressIndicator(),
                 ],
               ),
 

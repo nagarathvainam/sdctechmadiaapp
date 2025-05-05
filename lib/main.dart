@@ -17,6 +17,7 @@ import 'package:sdctechmedia/withdrawalpending.dart';
 import 'package:sdctechmedia/withdrawalsuccess.dart';
 import 'package:sdctechmedia/language.dart';
 import 'package:sdctechmedia/listsilideaction.dart';
+import 'package:sdctechmedia/theatreList.dart';
 
 import 'accountdetails.dart';
 

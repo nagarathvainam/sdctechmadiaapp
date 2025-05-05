@@ -2,21 +2,22 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
-import 'package:sdctechmedia/TheatreList.dart';
+import 'package:sdctechmedia/AddTheatre.dart';
+import 'package:sdctechmedia/adddistributorproducer.dart';
+import 'package:sdctechmedia/addlanguage.dart';
 import 'package:sdctechmedia/addratecard.dart';
 import 'package:sdctechmedia/distributorproducer.dart';
 import 'package:sdctechmedia/language.dart';
 import 'package:sdctechmedia/newlogin.dart';
 import 'package:sdctechmedia/pref_utils.dart';
+import 'package:sdctechmedia/ratecard.dart';
 
-
-
-class RateCard extends StatefulWidget {
+class Theatrelist extends StatefulWidget {
   @override
-  _RateCardState createState() => _RateCardState();
+  _TheatrelistState createState() => _TheatrelistState();
 }
 
-class _RateCardState extends State<RateCard> {
+class _TheatrelistState extends State<Theatrelist> {
   List<dynamic> allUsers = [];
   List<dynamic> filteredUsers = [];
   TextEditingController controller = TextEditingController();
@@ -37,23 +38,16 @@ class _RateCardState extends State<RateCard> {
     };
     var dio = Dio();
     var response = await dio.request(
-      'https://sdctech.in/Admin/fAmdm/ratecard_api.php',
+      'https://sdctech.in/Admin/fAmdm/theatre_api.php',
       options: Options(method: 'POST', headers: headers),
     );
 
     if (response.statusCode == 200) {
       var result = json.decode(response.toString());
-      print("responseCode:");
-      print(result['responseCode']);
 
-      print("responseMessage:");
-      print(result['responseMessage']);
-
-      print("responseData:");
-      print(result['data']);
 
       setState(() {
-        print(result['data']);
+
         allUsers = result['data'];
         print("Success fetching data:$allUsers");
         filteredUsers = allUsers;
@@ -61,7 +55,7 @@ class _RateCardState extends State<RateCard> {
       });
       //print(json.encode(response.data['data']));
     } else {
-      print("Errpr");
+      print("Error");
       print(response.statusMessage);
     }
     /*setState(() {
@@ -78,12 +72,11 @@ class _RateCardState extends State<RateCard> {
 
   void filterSearch(String query) {
     final results =
-        allUsers.where((user) {
-          final name = user['option'].toString().toLowerCase();
-          final bank = user['amount'].toString().toLowerCase();
-          return name.contains(query.toLowerCase()) ||
-              bank.contains(query.toLowerCase());
-        }).toList();
+    allUsers.where((user) {
+      final name = user['theatre_id'].toString().toLowerCase();
+       final bank = user['theatre_name'].toString().toLowerCase();
+      return name.contains(query.toLowerCase()) ||bank.contains(query.toLowerCase());
+    }).toList();
 
     setState(() {
       filteredUsers = results;
@@ -93,8 +86,12 @@ class _RateCardState extends State<RateCard> {
   Widget buildUserTile(user) {
     return Card(
       child: ListTile(
-        title: Text(user['option']),
-        subtitle: Text('No Of Show: ${user['no_of_show']}\nAmount: ${user['amount']}\nAmount in tax: ${user['amount_in_tax']}'),
+         title: Text('Theatre ID: ${user['theatre_id']}', style: TextStyle(
+           fontWeight: FontWeight.bold,
+           fontSize: 20,)),
+        subtitle: Text('Theatre Name: ${user['theatre_name']}', style: TextStyle(
+          fontWeight: FontWeight.bold,
+          fontSize: 18,)),
         isThreeLine: true,
       ),
     );
@@ -105,40 +102,40 @@ class _RateCardState extends State<RateCard> {
       context: context,
       builder:
           (context) => AlertDialog(
-            title: Text('Logout'),
-            content: Text('Are you sure you want to logout?'),
-            actions: [
-              TextButton(
-                onPressed: () => Navigator.of(context).pop(), // Close dialog
-                child: Text('Cancel'),
-              ),
-              TextButton(
-                onPressed: () {
-                  PrefUtils().setuserid("");
-                  Navigator.of(context).pop(); // Close dialog
-
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text('Logged out successfully!'),
-                      backgroundColor: Colors.green,
-                      // duration: Duration(seconds: 2),
-                    ),
-                  );
-
-                  //Future.delayed(Duration(seconds: 2), () {
-                  //Navigator.of(context).pushNamedAndRemoveUntil('/login', (route) => false);
-
-                  Navigator.pushAndRemoveUntil(
-                    context,
-                    MaterialPageRoute(builder: (context) => newlogin()),
-                    (e) => false,
-                  );
-                  // });
-                },
-                child: Text('Logout'),
-              ),
-            ],
+        title: Text('Logout'),
+        content: Text('Are you sure you want to logout?'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(), // Close dialog
+            child: Text('Cancel'),
           ),
+          TextButton(
+            onPressed: () {
+              PrefUtils().setuserid("");
+              Navigator.of(context).pop(); // Close dialog
+
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text('Logged out successfully!'),
+                  backgroundColor: Colors.green,
+                  // duration: Duration(seconds: 2),
+                ),
+              );
+
+              //Future.delayed(Duration(seconds: 2), () {
+              //Navigator.of(context).pushNamedAndRemoveUntil('/login', (route) => false);
+
+              Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(builder: (context) => newlogin()),
+                    (e) => false,
+              );
+              // });
+            },
+            child: Text('Logout'),
+          ),
+        ],
+      ),
     );
   }
 
@@ -198,26 +195,26 @@ class _RateCardState extends State<RateCard> {
         ),
       ),
       appBar: AppBar(
-        title: Text('Rate Card'),
+        title: Text('Theatre'),
         leading: Builder(
           builder:
               (context) => IconButton(
-                icon: Image.asset(
-                  'assets/logo.png', // replace with your logo image path
-                  height: 50,
-                  width: 50,
-                ),
-                onPressed: () {
-                  Scaffold.of(context).openDrawer(); // this opens the drawer
-                },
-              ),
+            icon: Image.asset(
+              'assets/logo.png', // replace with your logo image path
+              height: 50,
+              width: 50,
+            ),
+            onPressed: () {
+              Scaffold.of(context).openDrawer(); // this opens the drawer
+            },
+          ),
         ),
         actions: [
           TextButton(
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => AddRateCard()),
+                MaterialPageRoute(builder: (context) => AddTheatre()),
               );
             },
             child: Icon(Icons.add_circle_outline),
@@ -225,34 +222,34 @@ class _RateCardState extends State<RateCard> {
         ],
       ),
       body:
-          isLoading
-              ? Center(child: CircularProgressIndicator())
-              : Column(
-                children: [
-                  Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: TextField(
-                      controller: controller,
-                      onChanged: filterSearch,
-                      decoration: InputDecoration(
-                        hintText: 'Search',
-                        prefixIcon: Icon(Icons.search),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                      ),
-                    ),
-                  ),
-                  Expanded(
-                    child: ListView.builder(
-                      itemCount: filteredUsers.length,
-                      itemBuilder: (context, index) {
-                        return buildUserTile(filteredUsers[index]);
-                      },
-                    ),
-                  ),
-                ],
+      isLoading
+          ? Center(child: CircularProgressIndicator())
+          : Column(
+        children: [
+          Padding(
+            padding: EdgeInsets.all(8.0),
+            child: TextField(
+              controller: controller,
+              onChanged: filterSearch,
+              decoration: InputDecoration(
+                hintText: 'Search',
+                prefixIcon: Icon(Icons.search),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
               ),
+            ),
+          ),
+          Expanded(
+            child: ListView.builder(
+              itemCount: filteredUsers.length,
+              itemBuilder: (context, index) {
+                return buildUserTile(filteredUsers[index]);
+              },
+            ),
+          ),
+        ],
+      ),
     );
   }
 
@@ -269,12 +266,15 @@ class _RateCardState extends State<RateCard> {
             context,
             MaterialPageRoute(builder: (context) => RateCard()),
           );
-        }else if (title == "Producers/Distributors") {
+        }
+        else if (title == "Producers/Distributors") {
           Navigator.push(
             context,
             MaterialPageRoute(builder: (context) => DistributorProducer()),
           );
-        }else if (title == "Language") {
+
+        }
+        else if (title == "Language") {
           Navigator.push(
             context,
             MaterialPageRoute(builder: (context) => Language()),
@@ -286,7 +286,7 @@ class _RateCardState extends State<RateCard> {
             MaterialPageRoute(builder: (context) => Theatrelist()),
           );
 
-        } else {
+        }else {
           // Handle other navigation here if needed
         }
       },

@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:sdctechmedia/TheatreList.dart';
 import 'package:sdctechmedia/addratecard.dart';
 import 'package:sdctechmedia/distributorproducer.dart';
 import 'package:sdctechmedia/language.dart';
@@ -216,6 +217,12 @@ class dashboardState extends State {
           Navigator.push(
             context,
             MaterialPageRoute(builder: (context) => Language()),
+          );
+
+        }else if (title == "Theatre") {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => Theatrelist()),
           );
 
         } else {

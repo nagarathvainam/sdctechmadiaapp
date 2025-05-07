@@ -32,7 +32,7 @@ class AdminUserPage extends StatelessWidget {
           if (state is AdminUserLoading) {
             return Center(child: CircularProgressIndicator());
           } else if (state is AdminUserLoaded) {
-            return ListView.builder(
+            return SlidableAutoCloseBehavior(child:ListView.builder(
               itemCount: state.users.length,
               itemBuilder: (context, index) {
                 final user = state.users[index];
@@ -40,7 +40,9 @@ class AdminUserPage extends StatelessWidget {
                   key: ValueKey(user.id),
                   startActionPane: ActionPane(
                     motion: DrawerMotion(),
+
                     children: [
+
                       SlidableAction(
                         onPressed: (_) {}, // Add edit logic
                         icon: Icons.edit,
@@ -64,7 +66,7 @@ class AdminUserPage extends StatelessWidget {
                   ),
                 );
               },
-            );
+            ));
           } else if (state is AdminUserError) {
             return Center(child: Text(state.message));
           }

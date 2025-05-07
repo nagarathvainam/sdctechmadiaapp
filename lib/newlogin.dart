@@ -59,42 +59,12 @@ class newloginState extends State<newlogin> {
                   ),
                 ),
               ),
-              //SizedBox(height: 10),
-              /* Row(
-                children: [
-                  Checkbox(
-                    value: rememberMe,
-                    onChanged: (bool? value) {
-                      setState(() {
-                        rememberMe = value!;
-                      });
-                    },
-                    activeColor: Colors.redAccent, // Optional: for styling
-                  ),
-                  const Text('Remember me', style: TextStyle(fontSize: 14)),
-                ],
-              ),*/
+
               SizedBox(height: 30),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  /*Center(
-                    child: RichText(
-                      text: TextSpan(
-                        text: 'Forgot your password? ',
-                        style: TextStyle(color: Colors.black87, fontSize: 14),
-                        children: [
-                          TextSpan(
-                            text: 'Recover',
-                            style: TextStyle(
-                              color: Color(0xffBD1A8D),
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ), */
+
                   SizedBox(height: 30),
                   ElevatedButton(
                     onPressed: () {
@@ -160,54 +130,7 @@ class newloginState extends State<newlogin> {
                 ],
               ),
 
-              /* SizedBox(height: 30),
-              Text("Or create using social media"),
 
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Container(
-                    child: IconButton(
-                      icon: Icon(
-                        FontAwesomeIcons.facebookF,
-                        color: Colors.blue,
-                      ),
-                      onPressed: () {},
-                    ),
-                  ),
-                  Container(
-                    child: IconButton(
-                      icon: Icon(FontAwesomeIcons.google, color: Colors.red),
-                      onPressed: () {},
-                    ),
-                  ),
-                  Container(
-                    child: IconButton(
-                      icon: Icon(
-                        FontAwesomeIcons.twitter,
-                        color: Colors.lightBlue,
-                      ),
-                      onPressed: () {},
-                    ),
-                  ),
-                ],
-              ),*/
-
-              /*Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text("Don't have an account? "),
-                  GestureDetector(
-                    onTap: () {
-                      // Sign up logic
-                    },
-                    child: Text(
-                      "Sign up",
-                      style: TextStyle(color: Colors.blue),
-                    ),
-                  ),
-                ],
-              ),*/
             ],
           ),
         ),

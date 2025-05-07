@@ -1,0 +1,24 @@
+lib/
+├── blocs/
+│   ├── auth/                 # BLoC for login/logout/authentication
+│   │   ├── auth_bloc.dart
+│   │   ├── auth_event.dart
+│   │   └── auth_state.dart
+│   └── user/                 # BLoC for CRUD operations on users
+│       ├── user_bloc.dart
+│       ├── user_event.dart
+│       └── user_state.dart
+│
+├── models/
+│   └── user_model.dart       # User model class
+│
+├── repositories/
+│   ├── auth_repository.dart  # API calls for login/logout
+│   └── user_repository.dart  # API calls for user CRUD
+│
+├── screens/
+│   ├── login_screen.dart     # Login UI (connected to auth_bloc)
+│   ├── register_screen.dart  # Create new user
+│   └── user_list_screen.dart # View/update/delete users
+│
+└── main.dart                 # App entry with routing and session check

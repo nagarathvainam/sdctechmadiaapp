@@ -10,6 +10,8 @@ import 'package:sdctechmedia/newuser.dart';
 import 'package:sdctechmedia/login.dart';
 import 'package:sdctechmedia/pref_utils.dart';
 import 'package:sdctechmedia/ratecard.dart';
+import 'package:sdctechmedia/repositories/auth_repository.dart';
+import 'package:sdctechmedia/screens/login_screen.dart';
 import 'package:sdctechmedia/splash.dart';
 import 'package:sdctechmedia/successdetails.dart';
 import 'package:sdctechmedia/withdrawalfailed.dart';
@@ -20,51 +22,56 @@ import 'package:sdctechmedia/listsilideaction.dart';
 import 'package:sdctechmedia/theatreList.dart';
 
 import 'accountdetails.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'blocs/auth/auth_bloc.dart';
 void main() {
+  final authRepository = AuthRepository();
   WidgetsFlutterBinding.ensureInitialized();
+
   Future.wait([
     SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]),
     PrefUtils().init(),
   ]).then((value) {
 print("Init Value:");
 print(value);
+
   });
-  runApp(const MyApp());
+
+  runApp(MyApp(authRepository: authRepository));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final AuthRepository authRepository;
+
+  const MyApp({Key? key, required this.authRepository}) : super(key: key);
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
+    return BlocProvider(
+      create: (_) => AuthBloc(authRepository: authRepository),
+      child: MaterialApp(
+        theme: ThemeData(
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+          useMaterial3: true,
+        ),
+        debugShowCheckedModeBanner: false,
+        title: 'Flutter Login BLoC',
+        home: LoginScreen(), // Now LoginScreen can access AuthBloc
+      ),
+    )/*SafeArea(
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
 
         theme: ThemeData(
-          // This is the theme of your application.
-          //
-          // TRY THIS: Try running your application with "flutter run". You'll see
-          // the application has a purple toolbar. Then, without quitting the app,
-          // try changing the seedColor in the colorScheme below to Colors.green
-          // and then invoke "hot reload" (save your changes or press the "hot
-          // reload" button in a Flutter-supported IDE, or press "r" if you used
-          // the command line to start the app).
-          //
-          // Notice that the counter didn't reset back to zero; the application
-          // state is not lost during the reload. To reset the state, use hot
-          // restart instead.
-          //
-          // This works for code too, not just values: Most code changes can be
-          // tested with just a hot reload.
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
         ),
         home: SplashPage(title: "SDC"),
+        //routes: AppRoutes.routes,
       ),
-    );
+    )*/;
   }
 }
 

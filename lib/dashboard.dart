@@ -7,7 +7,7 @@ import 'package:sdctechmedia/distributorproducer.dart';
 import 'package:sdctechmedia/language.dart';
 import 'package:sdctechmedia/pref_utils.dart';
 import 'package:sdctechmedia/ratecard.dart';
-import 'package:sdctechmedia/screens/admin_user.dart';
+import 'package:sdctechmedia/users/bloc/admin_user.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sdctechmedia/newlogin.dart';
 

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:sdctechmedia/adddistributor.dart';
+import 'package:sdctechmedia/auth/auth_bloc.dart';
+import 'package:sdctechmedia/auth/auth_repository.dart';
 import 'package:sdctechmedia/bottomsheet.dart';
 import 'package:sdctechmedia/dashboard.dart';
 import 'package:sdctechmedia/enteramount.dart';
@@ -10,8 +12,6 @@ import 'package:sdctechmedia/newuser.dart';
 import 'package:sdctechmedia/login.dart';
 import 'package:sdctechmedia/pref_utils.dart';
 import 'package:sdctechmedia/ratecard.dart';
-import 'package:sdctechmedia/repositories/auth_repository.dart';
-import 'package:sdctechmedia/screens/login_screen.dart';
 import 'package:sdctechmedia/splash.dart';
 import 'package:sdctechmedia/successdetails.dart';
 import 'package:sdctechmedia/withdrawalfailed.dart';
@@ -23,8 +23,6 @@ import 'package:sdctechmedia/theatreList.dart';
 
 import 'accountdetails.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import 'blocs/auth/auth_bloc.dart';
 void main() {
   final authRepository = AuthRepository();
   WidgetsFlutterBinding.ensureInitialized();

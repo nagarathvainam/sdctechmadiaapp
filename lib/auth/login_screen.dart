@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sdctechmedia/auth/auth_bloc.dart';
+import 'package:sdctechmedia/auth/auth_event.dart';
+import 'package:sdctechmedia/auth/auth_state.dart';
 import 'package:sdctechmedia/dashboard.dart';
-import '../blocs/auth/auth_bloc.dart';
-import '../blocs/auth/auth_event.dart';
-import '../blocs/auth/auth_state.dart';
 //import 'user_list_screen.dart'; // Navigate here on successful login
 
 class LoginScreen extends StatefulWidget {

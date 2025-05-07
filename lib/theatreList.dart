@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
-import 'package:sdctechmedia/AddTheatre.dart';
+
 import 'package:sdctechmedia/adddistributorproducer.dart';
 import 'package:sdctechmedia/addlanguage.dart';
 import 'package:sdctechmedia/addratecard.dart';
@@ -209,17 +209,7 @@ class _TheatrelistState extends State<Theatrelist> {
             },
           ),
         ),
-        actions: [
-          TextButton(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => AddTheatre()),
-              );
-            },
-            child: Icon(Icons.add_circle_outline),
-          ),
-        ],
+
       ),
       body:
       isLoading

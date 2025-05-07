@@ -82,5 +82,16 @@ class PrefUtils {
       return "";
     }
   }
+  Future<void> setRateCardEditId(String value) {
+    return _sharedPreferences!.setString('RateCardEditId', value);
+  }
+
+  String getRateCardEditId() {
+    try {
+      return _sharedPreferences!.getString('RateCardEditId')!;
+    } catch (e) {
+      return "";
+    }
+  }
   // Fund Transfer Data Storage
 }

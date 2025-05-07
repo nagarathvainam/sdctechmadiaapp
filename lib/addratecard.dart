@@ -2,29 +2,47 @@ import 'package:flutter/material.dart';
 import 'package:sdctechmedia/api.dart';
 import 'package:dio/dio.dart';
 import 'package:sdctechmedia/enteramount.dart';
+import 'package:sdctechmedia/pref_utils.dart';
 import 'package:sdctechmedia/ratecard.dart';
 
 class AddRateCard extends StatefulWidget {
-  const AddRateCard({super.key});
+  final String option;
+  final String noofshow;
+  final String amount;
+  final String amountintax;
+  final String id;
+  final int index;
+
+  const AddRateCard({required this.option,required this.noofshow,required this.amount,required this.amountintax,required this.id,required this.index, Key? key}) : super(key: key);
 
   @override
   State<AddRateCard> createState() => _AddRateCardState();
 }
 class _AddRateCardState extends State<AddRateCard> {
+  @override
+
   int _counter = 0;
   bool loading = false;
   Api db=new Api();
-  final OptionsController = TextEditingController();
-  final NoofshowController = TextEditingController();
-final amountController = TextEditingController();
-final amountintaxController = TextEditingController();
+  late TextEditingController OptionsController;
+  late TextEditingController NoofshowController;
+  late TextEditingController amountController;
+  late TextEditingController amountintaxController;
 
   void _incrementCounter() {
     setState(() {
 
     });
   }
-
+  void initState() {
+    // TODO: implement initState
+    OptionsController = TextEditingController(text: widget.option);
+    NoofshowController = TextEditingController(text: widget.noofshow);
+    amountController = TextEditingController(text: widget.amount);
+    amountintaxController = TextEditingController(text: widget.amountintax);
+    PrefUtils().setRateCardEditId(widget.id);
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
 
@@ -32,7 +50,7 @@ final amountintaxController = TextEditingController();
       appBar: AppBar(
         titleSpacing: 00.0, // (
 
-        title: Text("Add Rate Card"),
+        title: Text("Add Rate Card"+PrefUtils().getRateCardEditId()),
       ),
       body: Center(
 

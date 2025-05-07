@@ -53,7 +53,25 @@ class Api {
 
     try{
       var headers = {'Cookie': 'PHPSESSID=ohsccuokdm98cjfsqn054u8oi0'};
-      var data = json.encode({'option': '$option', 'noofshow': '$noofshow','amount': '$amount','amount_in_tax': '$amountintax','user_id': PrefUtils().getuserid()});
+      var data ='';
+      if(PrefUtils().getRateCardEditId()!=''){
+      data = json.encode({
+        'option': '$option',
+        'noofshow': '$noofshow',
+        'amount': '$amount',
+        'amount_in_tax': '$amountintax',
+        'user_id': PrefUtils().getuserid(),
+        'id':PrefUtils().getRateCardEditId()
+      },
+      );
+      }else{
+        data = json.encode({
+          'option': '$option',
+          'noofshow': '$noofshow',
+          'amount': '$amount',
+          'amount_in_tax': '$amountintax',
+          'user_id': PrefUtils().getuserid()});
+      }
 
       var dio = Dio();
       var response = await dio.request(

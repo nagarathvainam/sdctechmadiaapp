@@ -5,10 +5,11 @@ import 'package:dio/dio.dart';
 import 'package:sdctechmedia/TheatreList.dart';
 import 'package:sdctechmedia/addratecard.dart';
 import 'package:sdctechmedia/distributorproducer.dart';
+import 'package:sdctechmedia/editRateCardPage.dart';
 import 'package:sdctechmedia/language.dart';
 import 'package:sdctechmedia/newlogin.dart';
 import 'package:sdctechmedia/pref_utils.dart';
-
+import 'package:flutter_slidable/flutter_slidable.dart';
 
 
 class RateCard extends StatefulWidget {
@@ -90,6 +91,40 @@ class _RateCardState extends State<RateCard> {
     });
   }
 
+  void editItem(int index) async {
+    final result = await Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => AddRateCard(
+          option: filteredUsers[index]['option'],
+          noofshow: filteredUsers[index]['no_of_show'],
+          amount: filteredUsers[index]['amount'],
+          amountintax: filteredUsers[index]['amount_in_tax'],
+          id: filteredUsers[index]['id'],
+          index: index,
+        ),
+      ),
+    );
+
+    if (result != null && result is String) {
+      setState(() {
+        filteredUsers[index] = result;
+      });
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Item updated')),
+      );
+    }
+  }
+  void deleteItem(int index) {
+    setState(() {
+      filteredUsers.removeAt(index);
+    });
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text('Deleted')),
+    );
+  }
   Widget buildUserTile(user) {
     return Card(
       child: ListTile(
@@ -215,9 +250,19 @@ class _RateCardState extends State<RateCard> {
         actions: [
           TextButton(
             onPressed: () {
+              PrefUtils().setRateCardEditId('');
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => AddRateCard()),
+                MaterialPageRoute(
+                  builder: (context) => AddRateCard(
+                    option: '',
+                    noofshow: '',
+                    amount: '',
+                    amountintax: '',
+                    id: '',
+                    index: 0,
+                  ),
+                ),
               );
             },
             child: Icon(Icons.add_circle_outline),
@@ -244,12 +289,51 @@ class _RateCardState extends State<RateCard> {
                     ),
                   ),
                   Expanded(
-                    child: ListView.builder(
+                    child:SlidableAutoCloseBehavior(
+                  child:ListView.builder(
+                      itemCount: filteredUsers.length,
+                      itemBuilder: (context, index) {
+                        return Slidable(
+                          key: ValueKey(filteredUsers[index]),
+                          startActionPane: ActionPane(
+                            motion: DrawerMotion(),
+                            children: [
+                              SlidableAction(
+                                onPressed: (_) => editItem(index),
+                                backgroundColor: Colors.blue,
+                                foregroundColor: Colors.white,
+                                icon: Icons.edit,
+                                label: 'Edit',
+                              ),
+                            ],
+                          ),
+                          endActionPane: ActionPane(
+                            motion: DrawerMotion(),
+                            children: [
+                              SlidableAction(
+                                onPressed: (_) => deleteItem(index),
+                                backgroundColor: Colors.red,
+                                foregroundColor: Colors.white,
+                                icon: Icons.delete,
+                                label: 'Delete',
+                              ),
+                            ],
+                          ),
+                          child: buildUserTile(filteredUsers[index]),/*Card(
+                            margin: EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                            child: ListTile(
+                              title: Text(filteredUsers[index]['']),
+                              subtitle: Text('Swipe left or right'),
+                            ),
+                          ),*/
+                        );
+                      },
+                    )),/*  child: ListView.builder(
                       itemCount: filteredUsers.length,
                       itemBuilder: (context, index) {
                         return buildUserTile(filteredUsers[index]);
                       },
-                    ),
+                    ),*/
                   ),
                 ],
               ),

@@ -58,7 +58,7 @@ class MyApp extends StatelessWidget {
         ),
         debugShowCheckedModeBanner: false,
         title: 'Flutter Login BLoC',
-        home: LoginScreen(), // Now LoginScreen can access AuthBloc
+        home: SplashPage(title: 'Splash'), // Now LoginScreen can access AuthBloc
       ),
     )/*SafeArea(
       child: MaterialApp(

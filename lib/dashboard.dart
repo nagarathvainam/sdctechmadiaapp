@@ -7,6 +7,7 @@ import 'package:sdctechmedia/distributorproducer.dart';
 import 'package:sdctechmedia/language.dart';
 import 'package:sdctechmedia/pref_utils.dart';
 import 'package:sdctechmedia/ratecard.dart';
+import 'package:sdctechmedia/screens/admin_user.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sdctechmedia/newlogin.dart';
 
@@ -225,7 +226,13 @@ class dashboardState extends State {
             MaterialPageRoute(builder: (context) => Theatrelist()),
           );
 
-        } else {
+        } else if (title == "Admin User") {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => AdminUser()),
+          );
+
+        }else {
           // Handle other navigation here if needed
         }
       },
